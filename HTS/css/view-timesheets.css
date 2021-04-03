@@ -1,0 +1,86 @@
+body {
+    background-image: linear-gradient(180deg, rgba(202,238,255,0.5), rgba(70,195,255,0.25));
+}
+
+.container {
+    position: relative;
+    top: 15em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    min-width: 30em;
+    max-width: 57.5em;
+    background-color: #FFF6F2;
+    box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.2);
+    border-radius: 1.125em;
+    padding: 1em 1em 2em 1em;
+}
+
+.container i {
+    font-size: 1.5em;
+    border: 0.025em solid #141516;
+    padding: 0.25em 0.375em;
+    border-radius: 100%;
+    background-color: #50ABFF;
+    color: #141516;
+}
+
+.container i:hover {
+    background-color: #188FFF;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0 auto 1em auto;
+    width: 90%;
+}
+
+.timesheet-container {
+    padding: 0.5em;
+    margin-bottom: 0.125em;
+    background-color: #50ABFF;
+    border: 0.05em solid black;
+    border-radius: 0.75em;
+    cursor: pointer;
+}
+
+.timesheet-container:hover {
+    background-color: #188FFF;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.timesheet-container h2 {
+    display: inline;
+    margin-right: 2em;
+}
+
+/*
+.container div a {
+    min-width: 7.5em;
+    width: 25%;
+    display: inline-block;
+    margin: 2em 5% 0 5%;
+    background-color: #50ABFF;
+    padding: 0.75em 0;
+    text-align: center;
+    border: 0.075em solid #141516;
+    border-radius: 2em;
+    outline: none;
+}
+
+.container div a:hover {
+    background-color: #188FFF;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+*/
+
+@media screen and (max-width: 520px) {
+    .container {
+        min-width: 90%;
+    }
+}
