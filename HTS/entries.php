@@ -6,7 +6,7 @@ class Entries extends Connect {
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                if ($_SESSION["id"] == $row["ConsultantID"]) {
+                if ($_SESSION["id"] == $row["empId"]) {
                     $entries[] = $row;
                 }
             }
