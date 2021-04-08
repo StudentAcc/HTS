@@ -1,34 +1,19 @@
 <?php
-session_start();
-// Check whether a user has already logged in.
-if (isset($_SESSION["status"]) == false) {
-  $_SESSION["status"] = false;
-  $_SESSION["id"] = 0;
-  $_SESSION["type"] = "";
-}
-else {
-    // A user has already typed in their credential. Determine which user it was via their ID.
-    $conn = new mysqli("localhost", "root", "", "hts");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "SELECT ID, Type FROM users";
-    $result = $conn->query($sql);
-    // Go through each entry in the table and see which user already logged in via ID.
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            if ($row["ID"] == $_SESSION["id"]) {
-                if ($row["Type"] == "consultant" || $row["Type"] == "manager" || $row["Type"] == "administrator" || $row["Type"] == "finance") { 
-                    header("Location: index.php"); 
-                }
-            }
+    require "./classes/connect.php";
+    require "./classes/validation.php";
+    session_start();
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $username = $_POST["username"];
+	    $password = $_POST["password"];
+        $checkValidity = new Validation();
+        if ($checkValidity->login($username, $password)) {
+            header("Location: index.php");
+        }
+        else {
+            $error = "Your login credentials are incorrect.";
         }
     }
-    else {
-        echo "ERROR - There seems to be an issue with the database. No login details found";
-    }
-    $conn->close();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,22 +27,37 @@ else {
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
     </head>
     <body>
-        <nav class="navbar">
-            <ul>
-                <li>HTS<i class="fas fa-hourglass-half"></i></li>
-            </ul>
-        </nav>
-        <section>
-            <div class="login">
-                <h1>Login</h1>
-                <form action="./validation.php" method="post">
-                    <label for="username"><b>Username</b></label>
-                    <input type="text" name="username" required>
-                    <label for="password"><b>Password</b></label>
-                    <input type="password" name="password" required>
-                    <button type="submit">Login</button>
-                </form>
-            </div>
-        </section>
+        <?php
+        include "./start-navbar.php";
+        // Check whether a user has already logged in.
+        if (isset($_SESSION["type"])) {
+            echo "<section>
+                <div class='login'>
+                    <h1>You are already logged in as ".$_SESSION["username"]."</h1>
+                    <p>Go back to <a href='index.php'>homepage</a> or <a href='logout.php'>logout</a> to log into another account.</p>
+                    <div class='button-container'>
+                        <a href='./index.php'>Main Page</a>
+                        <a href='./logout.php'>Sign out</a>
+                    </div>
+                </div>
+            </section>";
+        }
+        else {
+            echo "<section>
+                <div class='login'>
+                    <h1>Login</h1>".((isset($error)) ? '<p class="error-message">The credentials you entered are incorrect.</p>' : '<p>Welcome to hourglass timesheets system. Login into the System.</p>')."
+                    <form action='".htmlspecialchars($_SERVER['PHP_SELF'])."' method='post'>
+                        <label for='username'><b>Username</b></label>
+                        <input type='text' name='username' required>
+                        <label for='password'><b>Password</b></label>
+                        <input type='password' name='password' required>
+                        <button type='submit'>Login</button>
+                    </form>
+                    <div class='sign-up-container'>
+                        <p>Don't have an account? <a href='sign-up.php'>Sign up!</a></p>
+                    </div>
+                </div>
+            </section>";
+        }?>
     </body>
 </html>

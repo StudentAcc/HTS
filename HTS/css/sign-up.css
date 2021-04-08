@@ -2,9 +2,9 @@ body {
     background-image: linear-gradient(180deg, rgba(202,238,255,0.5), rgba(70,195,255,0.25));
 }
 
-.login {
+.sign-up {
     position: relative;
-    top: 12em;
+    top: 5em;
     margin-left: auto;
     margin-right: auto;
     width: 40%;
@@ -13,51 +13,46 @@ body {
     background-color: #FFF6F2;
     box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.2);
     border-radius: 1.125em;
-    padding: 2em 1em 1em 1em;
+    padding: 1em 1em 1em 1em;
 }
 
-.login h1 {
+.sign-up i {
+    font-size: 1.5em;
+    border: 0.025em solid #141516;
+    padding: 0.25em 0.375em;
+    border-radius: 100%;
+    background-color: #50ABFF;
+    color: #141516;
+}
+
+.sign-up i:hover {
+    background-color: #188FFF;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.sign-up h1, .sign-up p {
     text-align: center;
+}
+
+.sign-up h1 {
     font-size: 1.5em;
     margin-bottom: 0.5em;
 }
 
-.login p {
-    text-align: center;
+.sign-up p {
+    width: 90%;
+    margin: 0 auto;
 }
 
 .error-message {
     color: #FF2020;
 }
 
-.button-container {
-    text-align: center;
-}
-
-.button-container a {
-    min-width: 7.5em;
-    width: 25%;
-    display: inline-block;
-    margin: 2em 5% 0 5%;
-    background-color: #50ABFF;
-    padding: 0.75em 0;
-    text-align: center;
-    border: 0.075em solid #141516;
-    border-radius: 2em;
-    outline: none;
-}
-
-.button-container a:hover {
-    background-color: #188FFF;
-    transition: 0.25s ease;
-    cursor: pointer;
-}
-
 form {
-    border-bottom: 0.075em solid #000000;
-    margin: 1em 0;
-    padding-top: 1em;
     border-top: 0.075em solid #000000;
+    margin-top: 1em;
+    padding-top: 1em;
 }
 
 form label, form input {
@@ -92,22 +87,8 @@ form button:hover {
     cursor: pointer;
 }
 
-.sign-up-container {
-    background-color: #ffe7dc;
-    border-radius: 1em;
-    padding: 1em;
-}
-
-.sign-up-container p a {
-    text-decoration: underline;
-    font-weight: bold;
-}
-.sign-up-container p a:hover {
-    color: #188FFF;
-}
-
 @media screen and (max-width: 520px) {
-    .login {
+    .sign-up {
         min-width: 90%;
     }
 }
