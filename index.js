@@ -37,31 +37,50 @@ function viewLogHours(timesheetID) {
     window.location.href = "view-day-entries.php?id=" + timesheetID; 
 }
 
-function ToggleDisplayFilter (ID) {
-    if (document.getElementById(ID).style.display == 'none' || document.getElementById(ID).style.display == '') {
-        document.getElementById(ID).style.display = 'inline';
-        document.getElementById(ID).addEventListener("input",ToggleDisplayDayEntries);
+function ToggleDisplayFilter (id, className, idPrefix) {
+    console.log(id, className);
+    if (document.getElementById(id).style.display == 'none' || document.getElementById(id).style.display == '') {
+        document.getElementById(id).style.display = 'inline';
+        var filters = document.getElementsByClassName(className);
+        for (var i=0; i<filters.length; i++) {
+            filters[i].addEventListener("input",FilterEventHandler);
+        }
     } else {
-        document.getElementById(ID).style.display = 'none';
-        document.getElementById("DayEntryFilters").value = "";
-        document.querySelectorAll('[id^="DayEntryID"]').forEach((BlogPosts) => {
-            BlogPosts.style.display = 'block';
+        document.getElementById(id).style.display = 'none';
+        var filters = document.getElementsByClassName(className);
+        for (var i=0; i<filters.length; i++) {
+            filters[i].value = "";
+            filters[i].removeEventListener("input",FilterEventHandler);
+        }
+        document.querySelectorAll('[id^="'+idPrefix+'"]').forEach((entry) => {
+            // console.log(entry);
+            entry.style.display = 'block';
         });
-        document.getElementById(ID).removeEventListener("input",ToggleDisplayDayEntries);
     }
 }
 
-function ToggleDisplayDayEntries() {
-    if (document.getElementById('DayEntryFilters').style.display == 'inline') {
-        
-        document.querySelectorAll('[id^="DayEntryID"]').forEach((BlogPosts) => {
-            BlogPosts.style.display = 'none';
-        });
+function FilterEventHandler() {
+    // if (document.getElementById('DayEntryFilter-Month').style.display == 'inline') {
+    console.log(this.className)
+    entryColectionName = this.id.split('-')[0];
+    document.querySelectorAll('[id^="'+entryColectionName+'_"]').forEach((entry) => {
+        entry.style.display = 'none';
+    });
 
-        Month = String("DayEntryID" + document.getElementById("DayEntryFilters").value);
-        document.querySelectorAll('[id*= '+Month+']').forEach((BlogPosts) => {
-            BlogPosts.style.display = 'block';
-        });
-
+    var filterString = entryColectionName
+    var filters = document.getElementsByClassName(this.className);
+    for (var i=0; i<filters.length; i++) {
+        filterString += '_' + filters[i].getAttribute("name") + "-" + filters[i].value
     }
+
+    if (filterString.slice(-1) != "-") {
+        filterString += '_'
+    }
+
+    // Month = String("DayEntryID" + document.getElementById("DayEntryFilter-Month").value);
+    document.querySelectorAll('[id*= '+filterString+']').forEach((entry) => {
+        entry.style.display = 'block';
+    });
+
+    // }
 }

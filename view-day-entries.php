@@ -32,6 +32,13 @@
                     $timesheetID = $_GET["id"];
                     echo("<script>console.log('PHP: " . 3 . "');</script>");
                     echo("<script>console.log('PHP: " . $timesheetID . "');</script>");
+                    echo('<aside class = "Filters">');
+                    echo('<button id = "ToggleFilter" onClick="ToggleDisplayFilter(`HiddenAdjacentDropdown`,`HiddenAdjacentDropdownSelection`, `DayEntry`)">Toggle Filter</button>');
+                    echo('<div class = "HiddenAdjacentDropdown" id = "HiddenAdjacentDropdown">');
+                    echo('<input name="Date" type="Month" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Month">');
+                    echo('<input name="Hours" type="number" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Hours">');
+                    echo('</div>');
+                    echo('</aside>');
                     $dayEntries = new View();
                     $dayEntries->printDayEntries($timesheetID);
                 ?>
