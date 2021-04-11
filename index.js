@@ -32,3 +32,36 @@ function logHoursFunction() {
 function viewTimesheetsFunction() {
     window.location.replace("view-timesheets.php");
 }
+
+function viewLogHours(timesheetID) {
+    window.location.href = "view-day-entries.php?id=" + timesheetID; 
+}
+
+function ToggleDisplayFilter (ID) {
+    if (document.getElementById(ID).style.display == 'none' || document.getElementById(ID).style.display == '') {
+        document.getElementById(ID).style.display = 'inline';
+        document.getElementById(ID).addEventListener("input",ToggleDisplayDayEntries);
+    } else {
+        document.getElementById(ID).style.display = 'none';
+        document.getElementById("DayEntryFilters").value = "";
+        document.querySelectorAll('[id^="DayEntryID"]').forEach((BlogPosts) => {
+            BlogPosts.style.display = 'block';
+        });
+        document.getElementById(ID).removeEventListener("input",ToggleDisplayDayEntries);
+    }
+}
+
+function ToggleDisplayDayEntries() {
+    if (document.getElementById('DayEntryFilters').style.display == 'inline') {
+        
+        document.querySelectorAll('[id^="DayEntryID"]').forEach((BlogPosts) => {
+            BlogPosts.style.display = 'none';
+        });
+
+        Month = String("DayEntryID" + document.getElementById("DayEntryFilters").value);
+        document.querySelectorAll('[id*= '+Month+']').forEach((BlogPosts) => {
+            BlogPosts.style.display = 'block';
+        });
+
+    }
+}

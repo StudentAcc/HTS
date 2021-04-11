@@ -36,5 +36,34 @@ class Entries extends Connect {
             return $entries;
         }
     }
+
+    protected function getAllTimesheets() {
+        $temp = $_SESSION['id'];
+        $sql = "SELECT * FROM weeklytimesheets WHERE consultantId = '$temp'";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $timesheets[] = $row;
+            }
+            return $timesheets;
+        }
+    }
+
+    protected function getAllDayEntries($timesheetID) {
+        $temp = $_SESSION['id'];
+        echo("<script>console.log('PHP: " . 3 . "');</script>");
+        echo("<script>console.log('PHP: " . $timesheetID . "');</script>");
+        $sql = "SELECT * FROM dayentries d INNER JOIN weeklytimesheets w ON d.WeeklyTimesheetId = w.Id AND w.consultantId = '$temp' 
+        INNER JOIN task t ON t.dayEntryID = d.Id INNER JOIN projectlist p ON p.Id = t.projectId INNER JOIN tasktypelist tl ON tl.Id = t.taskTypeId
+        INNER JOIN expense e ON e.dayEntryId = d.Id INNER JOIN expensetypelist el ON el.Id = e.expenseTypeId
+        ORDER BY d.date DESC";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                 $entries[] = $row;
+            }
+            return $entries;
+        }
+    }
 }
 ?>
