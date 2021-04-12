@@ -49,13 +49,18 @@ class Entries extends Connect {
         }
     }
 
-    protected function getAllDayEntries($timesheetID) {
+    protected function getAllDayEntries($timesheetID, $filters) {
         $temp = $_SESSION['id'];
+        $date = $filters['Date']."%";
+
+        $hours = $filters['Hours'];
+        $task = $filters['Task'];
         echo("<script>console.log('PHP: " . 3 . "');</script>");
-        echo("<script>console.log('PHP: " . $timesheetID . "');</script>");
+        echo("<script>console.log('PHP : " . $date . "');</script>");
         $sql = "SELECT * FROM dayentries d INNER JOIN weeklytimesheets w ON d.WeeklyTimesheetId = w.Id AND w.consultantId = '$temp' 
         INNER JOIN task t ON t.dayEntryID = d.Id INNER JOIN projectlist p ON p.Id = t.projectId INNER JOIN tasktypelist tl ON tl.Id = t.taskTypeId
-        INNER JOIN expense e ON e.dayEntryId = d.Id INNER JOIN expensetypelist el ON el.Id = e.expenseTypeId
+        INNER JOIN expense e ON e.dayEntryId = d.Id INNER JOIN expensetypelist el ON el.Id = e.expenseTypeId 
+        WHERE d.date LIKE '$date' AND t.hours LIKE '$hours' AND tl.taskType LIKE '$task'
         ORDER BY d.date DESC";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {

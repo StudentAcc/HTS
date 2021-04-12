@@ -24,12 +24,12 @@ class View extends Entries {
         }
     }
 
-    public function printDayEntries($timesheetID) {
+    public function printDayEntries($timesheetID, $filters) {
         echo("<script>console.log('PHP: " . 3 . "');</script>");
         echo("<script>console.log('PHP: " . $timesheetID . "');</script>");
-        $data = $this->getAllDayEntries($timesheetID);
+        $data = $this->getAllDayEntries($timesheetID, $filters);
         foreach ($data as $entries) {
-            echo "<div class='timesheet-container'  id = ".strval('DayEntry_Date-'.substr($entries['date'],0,7).'_Hours-'.$entries['hours'].'_Task-'.$entries['taskType'].'_Project-'.$entries['projectName'].'_Expense-'.$entries['expenseType'].'_ID-'.$entries['Id']).'_'.">";
+            echo "<div class='timesheet-container'>";
             echo "<h2>Date: ".date("d-m-Y", strtotime($entries['date']))."</h2>";
             echo "<h2>Hours: ".$entries['hours']."</h2>";
             echo "<p>Task: ".$entries['taskType']."</p>";
