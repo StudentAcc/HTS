@@ -52,7 +52,7 @@ function ToggleDisplayFilter (id, className, idPrefix) {
             filters[i].value = "";
             filters[i].removeEventListener("input",FilterEventHandler);
         }
-        document.querySelectorAll('[id^="'+idPrefix+'"]').forEach((entry) => {
+        document.querySelectorAll('[id^="'+idPrefix+'_"]').forEach((entry) => {
             // console.log(entry);
             entry.style.display = 'block';
         });
@@ -61,24 +61,37 @@ function ToggleDisplayFilter (id, className, idPrefix) {
 
 function FilterEventHandler() {
     // if (document.getElementById('DayEntryFilter-Month').style.display == 'inline') {
-    console.log(this.className)
+    // console.log(this.className)
     entryColectionName = this.id.split('-')[0];
     document.querySelectorAll('[id^="'+entryColectionName+'_"]').forEach((entry) => {
         entry.style.display = 'none';
     });
 
-    var filterString = entryColectionName
+    // var filterString = entryColectionName
+    // var filters = document.getElementsByClassName(this.className);
+    // for (var i=0; i<filters.length; i++) {
+    //     filterString += '_' + filters[i].getAttribute("name") + "-" + filters[i].value;
+    //     // if (filters[i].value == "") {
+    //     //     filterString += "*"
+    //     // } else {
+    //     //     filterString += filters[i].value
+    //     // }
+    // }
+
+    var filterString = "[id*= " + entryColectionName + "]";
     var filters = document.getElementsByClassName(this.className);
     for (var i=0; i<filters.length; i++) {
-        filterString += '_' + filters[i].getAttribute("name") + "-" + filters[i].value
+        if (filters[i].value != "") {
+            filterString += "[id*= " + '_' + filters[i].getAttribute("name") + "-" + filters[i].value + "_]";
+        }
     }
 
-    if (filterString.slice(-1) != "-") {
-        filterString += '_'
-    }
+    // if (filterString.slice(-1) != "-") {
+    //     filterString += '_'
+    // }
 
     // Month = String("DayEntryID" + document.getElementById("DayEntryFilter-Month").value);
-    document.querySelectorAll('[id*= '+filterString+']').forEach((entry) => {
+    document.querySelectorAll(filterString).forEach((entry) => {
         entry.style.display = 'block';
     });
 

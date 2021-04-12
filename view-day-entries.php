@@ -37,6 +37,8 @@
                     echo('<div class = "HiddenAdjacentDropdown" id = "HiddenAdjacentDropdown">');
                     echo('<input name="Date" type="Month" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Month">');
                     echo('<input name="Hours" type="number" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Hours">');
+                    // echo('<input name="Task" type="text" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Task">');
+                    // echo('<input name="Project" type="text" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Project">');
                     echo('</div>');
                     echo('</aside>');
                     $dayEntries = new View();
