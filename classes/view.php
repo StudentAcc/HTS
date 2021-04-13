@@ -20,7 +20,14 @@ class View extends Entries {
             else {
                 echo "<p>Date Resolved: ".$entries['resolved']."</p>";
             }
-            echo "</div>";
+            // submit (+ delete) weekly timesheet button (implemented as a form with hidden value of timesheet id)
+            $timesheetId = $entries['Id'];
+            echo "<form action='submit-weekly-timesheet.php' method='post'>
+                    <input type='hidden' name='timesheetId' value='$timesheetId'/>
+                    <button type='submit'>Submit</button>
+                    <button type = 'submit'>Delete</button>
+                </form>
+            </div>";
         }
     }
 
