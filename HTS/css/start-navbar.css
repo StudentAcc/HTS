@@ -1,0 +1,24 @@
+/* The navigation bar sticks to the top of the page - even when scrolling. */
+.navbar {
+    background-color: #141516;
+    padding: 0 2em 0 2em;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.navbar ul {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+  
+.navbar ul li {
+    display: block;
+    text-align: center;
+    padding: 1em 1.25em;
+    border: 0.25em solid #141516;
+    color: #FFFFFF;
+}
