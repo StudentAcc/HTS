@@ -52,16 +52,19 @@ class Entries extends Connect {
     protected function getAllDayEntries($timesheetID, $filters) {
         $temp = $_SESSION['id'];
         $date = $filters['Date']."%";
-
         $hours = $filters['Hours'];
         $task = $filters['Task'];
-        echo("<script>console.log('PHP: " . 3 . "');</script>");
-        echo("<script>console.log('PHP : " . $date . "');</script>");
+        $project = $filters['Project'];
+        $expenseType = $filters['ExpenseType'];
+        $expenseAmount = $filters['ExpenseAmount'];
+        $W = "%";
+        // echo("<script>console.log('PHP: " . 3 . "');</script>");
+        // echo("<script>console.log('PHP : " .(($expenseType != "%") && ($expenseAmount != "%")?"gggggggggg":"AND el.expenseType LIKE AND e.expenseAmount LIKE") . "');</script>");
         $sql = "SELECT * FROM dayentries d INNER JOIN weeklytimesheets w ON d.WeeklyTimesheetId = w.Id AND w.consultantId = '$temp' 
         INNER JOIN task t ON t.dayEntryID = d.Id INNER JOIN projectlist p ON p.Id = t.projectId INNER JOIN tasktypelist tl ON tl.Id = t.taskTypeId
-        INNER JOIN expense e ON e.dayEntryId = d.Id INNER JOIN expensetypelist el ON el.Id = e.expenseTypeId 
-        WHERE d.date LIKE '$date' AND t.hours LIKE '$hours' AND tl.taskType LIKE '$task'
-        ORDER BY d.date DESC";
+        LEFT JOIN expense e ON e.dayEntryId = d.Id LEFT JOIN expensetypelist el ON el.Id = e.expenseTypeId 
+        WHERE d.date LIKE '$date' AND t.hours LIKE '$hours' AND tl.taskType LIKE '$task' AND p.projectName LIKE '$project' 
+        ".( $expenseType == "%" && $expenseAmount == "%"?"":"AND el.expenseType LIKE '$expenseType' AND e.expenseAmount LIKE '$expenseAmount' ")."AND w.Id = '$timesheetID' ORDER BY d.date DESC";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {

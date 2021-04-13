@@ -17,14 +17,20 @@
         $filters = [
             "Date"   => emptyCheck($_POST["Date"],"%"),
             "Hours"  => emptyCheck($_POST["Hours"],"%"),
-            "Task"  => emptyCheck($_POST["Task"],"%")
+            "Task"  => emptyCheck($_POST["Task"],"%"),
+            "Project"  => emptyCheck($_POST["Project"],"%"),
+            "ExpenseType"  => emptyCheck($_POST["ExpenseType"],"%"),
+            "ExpenseAmount"  => emptyCheck($_POST["ExpenseAmount"],"%")
         ];
     } else {
         $_SESSION["timesheetID"] = $_GET["id"];
         $filters = [
             "Date"   => "%",
             "Hours"  => "%",
-            "Task"  => "%"
+            "Task"  => "%",
+            "Project"  => "%",
+            "ExpenseType"  => "%",
+            "ExpenseAmount"  => "%"
         ];
     }
 
@@ -68,32 +74,23 @@
                     echo('<input name="Hours" type="number" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Hours"]:"").'">');
                     echo('<label for="Task"><b>Task</b></label>');
                     echo('<input name="Task" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Task"]:"").'">');
+                    echo('<label for="Project"><b>Project</b></label>');
+                    echo('<input name="Project" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Project"]:"").'">');
+                    echo('<label for="ExpenseType"><b>Expense Type</b></label>');
+                    echo('<input name="ExpenseType" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["ExpenseType"]:"").'">');
+                    echo('<label for="ExpenseAmount"><b>Expense Amount</b></label>');
+                    echo('<input name="ExpenseAmount" type="number" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["ExpenseAmount"]:"").'">');
                     echo('<button type="submit">Submit</button>');
                     echo('</form>');
 
-                    echo("<script>console.log('PHP: " . $filters['Date'] . "');</script>");
-                    echo("<script>console.log('PHP: " . $filters['Hours'] . "');</script>");
-                    echo("<script>console.log('PHP: " . $filters['Task'] . "');</script>");
+                    // echo("<script>console.log('PHP: " . $filters['Date'] . "');</script>");
+                    // echo("<script>console.log('PHP: " . $filters['Hours'] . "');</script>");
+                    // echo("<script>console.log('PHP: " . $filters['Task'] . "');</script>");
 
-                    // echo('<div class = "HiddenAdjacentDropdown" id = "HiddenAdjacentDropdown">');
-                    // echo('<input name="Date" type="Month" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Month">');
-                    // echo('<input name="Hours" type="number" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Hours">');
-                    // // echo('<input name="Task" type="text" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Task">');
-                    // // echo('<input name="Project" type="text" class = "HiddenAdjacentDropdownSelection" id="DayEntry-Filter-Project">');
-                    // echo('</div>');
                     echo('</aside>');
                     $dayEntries = new View();
                     $dayEntries->printDayEntries($_SESSION["timesheetID"], $filters);
                 ?>
-                <!-- <form method="post" action="./view-day-entries.php">
-                <label for="Month"><b>Month</b></label>
-                <input name="Date" type="Month">
-                <label for="Hours"><b>Hours</b></label>
-                <input name="Hours" type="number">
-                <label for="Task"><b>Task</b></label>
-                <input name="Task" type="text">
-                <button type="submit">Submit</button>
-                </form> -->
             </div>
         </section>
     </body>

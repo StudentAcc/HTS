@@ -235,7 +235,7 @@ class SubmitHours extends Connect {
                     $year--;
                     $month = 12;
                 }
-                $monday = compensateNegativeDay($monday, $month);
+                $monday = $this->compensateNegativeDay($monday, $month);
             }
         }
         elseif ($month == 4 || $month == 6 || $month == 9 || $month == 11) {
@@ -245,7 +245,7 @@ class SubmitHours extends Connect {
                     $year--;
                     $month = 12;
                 }
-                $monday = compensateNegativeDay($monday, $month);
+                $monday = $this->compensateNegativeDay($monday, $month);
             }
         }
         elseif ($month == 2) {
@@ -257,7 +257,7 @@ class SubmitHours extends Connect {
                         $year--;
                         $month = 12;
                     }
-                    $monday = compensateNegativeDay($monday, $month);
+                    $monday = $this->compensateNegativeDay($monday, $month);
                 }
             }
             else {
@@ -267,7 +267,7 @@ class SubmitHours extends Connect {
                         $year--;
                         $month = 12;
                     }
-                    $monday = compensateNegativeDay($monday, $month);
+                    $monday = $this->compensateNegativeDay($monday, $month);
                 }
             }
         }
