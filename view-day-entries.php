@@ -66,7 +66,7 @@
                     // echo("<script>console.log('PHP: " . 3 . "');</script>");
                     // echo("<script>console.log('PHP: " . $timesheetID . "');</script>");
                     echo('<aside class = "Filters">');
-                    echo('<button id = "Reset Filters" onClick="viewLogHours('.$_SESSION["timesheetID"].')">Reset Filters</button>');
+                    echo('<button id = "Reset Filters" onClick="viewDayEntries('.$_SESSION["timesheetID"].')">Reset Filters</button>');
                     echo('<form id = "DayEntryFilter" method="post" action="./view-day-entries.php">');
                     echo('<label for="Date"><b>Date</b></label>');
                     echo('<input name="Date" type="Month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Date"]:"").'">');

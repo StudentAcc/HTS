@@ -37,13 +37,21 @@ class Entries extends Connect {
         }
     }
 
-    protected function getAllTimesheets() {
+    protected function getAllTimesheets($filters) {
         $temp = $_SESSION['id'];
-        $sql = "SELECT * FROM weeklytimesheets WHERE consultantId = '$temp'";
+        $start = $filters['Start'];
+        $end = $filters['End'];
+        $status = $filters['Status'];
+        $resolved = $filters['Resolved'];
+        $submitted = $filters['Submitted'];
+        $sql = "SELECT * FROM weeklytimesheets w WHERE w.consultantId = '$temp' AND w.start LIKE '$start' AND w.end LIKE '$end'
+        AND w.status LIKE '$status' AND ( (w.submitted LIKE '$submitted') ".( $submitted == "%" ?'OR w.submitted IS NULL)':")")."AND
+        ( ( w.resolved LIKE '$resolved') ".( $resolved == "%" ?"OR w.resolved IS NULL)":")")."";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $timesheets[] = $row;
+                echo("<script>console.log('PHP: " . 3 . "');</script>");
             }
             return $timesheets;
         }
@@ -57,7 +65,7 @@ class Entries extends Connect {
         $project = $filters['Project'];
         $expenseType = $filters['ExpenseType'];
         $expenseAmount = $filters['ExpenseAmount'];
-        $W = "%";
+        // $W = "%";
         // echo("<script>console.log('PHP: " . 3 . "');</script>");
         // echo("<script>console.log('PHP : " .(($expenseType != "%") && ($expenseAmount != "%")?"gggggggggg":"AND el.expenseType LIKE AND e.expenseAmount LIKE") . "');</script>");
         $sql = "SELECT * FROM dayentries d INNER JOIN weeklytimesheets w ON d.WeeklyTimesheetId = w.Id AND w.consultantId = '$temp' 

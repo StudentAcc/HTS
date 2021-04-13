@@ -1,33 +1,40 @@
 <?php
 class View extends Entries {
     // Show all the entries from the timesheet table
-    public function printTimesheetEntries() {
-        $data = $this->getAllTimesheets();
-        foreach ($data as $entries) {
-            echo "<div class='timesheet-container' onclick='viewLogHours(".$entries['Id'].")'>";
-            echo "<h2>Start: ".$entries['start']."</h2>";
-            echo "<h2>End: ".$entries['end']."</h2>";
-            echo "<p>Status: ".$entries['status']."</p>";
-            if ($entries["submitted"] == NULL) {
-                echo "<p>Date Submitted: N/A</p>";
+    public function printTimesheetEntries($filters) {
+        $data = $this->getAllTimesheets($filters);
+        if (is_null($data)) {
+            echo("<div class = 'timesheet-no-results'>");
+            echo "<h0>No Weekly Timesheets Found</h0>";
+            echo "</div>";
+        } else {
+            // echo("<script>console.log('PHP: " . 3 . "');</script>");
+            foreach ($data as $entries) {
+                echo "<div class='timesheet-container' onclick='viewDayEntries(".$entries['Id'].")'>";
+                echo "<h2>Start: ".$entries['start']."</h2>";
+                echo "<h2>End: ".$entries['end']."</h2>";
+                echo "<p>Status: ".$entries['status']."</p>";
+                if ($entries["submitted"] == NULL) {
+                    echo "<p>Date Submitted: N/A</p>";
+                }
+                else {
+                    echo "<p>Date Submitted: ".$entries['submitted']."</p>";
+                }
+                if ($entries["resolved"] == NULL) {
+                    echo "<p>Date Resolved: N/A</p>";
+                }
+                else {
+                    echo "<p>Date Resolved: ".$entries['resolved']."</p>";
+                }
+                // submit (+ delete) weekly timesheet button (implemented as a form with hidden value of timesheet id)
+                $timesheetId = $entries['Id'];
+                echo "<form action='submit-weekly-timesheet.php' method='post'>
+                        <input type='hidden' name='timesheetId' value='$timesheetId'/>
+                        <button type='submit'>Submit</button>
+                        <button type = 'submit'>Delete</button>
+                    </form>
+                </div>";
             }
-            else {
-                echo "<p>Date Submitted: ".$entries['submitted']."</p>";
-            }
-            if ($entries["resolved"] == NULL) {
-                echo "<p>Date Resolved: N/A</p>";
-            }
-            else {
-                echo "<p>Date Resolved: ".$entries['resolved']."</p>";
-            }
-            // submit (+ delete) weekly timesheet button (implemented as a form with hidden value of timesheet id)
-            $timesheetId = $entries['Id'];
-            echo "<form action='submit-weekly-timesheet.php' method='post'>
-                    <input type='hidden' name='timesheetId' value='$timesheetId'/>
-                    <button type='submit'>Submit</button>
-                    <button type = 'submit'>Delete</button>
-                </form>
-            </div>";
         }
     }
 
@@ -37,7 +44,7 @@ class View extends Entries {
         $data = $this->getAllDayEntries($timesheetID, $filters);
         if (is_null($data)) {
             echo("<div class = 'timesheet-no-results'>");
-            echo "<h0>No Matching Results</h0>";
+            echo "<h0>No Day Entries Found</h0>";
             echo "</div>";
         } else {
             foreach ($data as $entries) {

@@ -33,6 +33,6 @@ function viewTimesheetsFunction() {
     window.location.replace("view-timesheets.php");
 }
 
-function viewLogHours(timesheetID) {
+function viewDayEntries(timesheetID) {
     window.location.href = "view-day-entries.php?id=" + timesheetID; 
 }
