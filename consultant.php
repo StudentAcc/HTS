@@ -21,7 +21,7 @@ echo "<div class='row'>
     </div>
 </div>
 <div class='column'>
-    <div class='card'>
+    <div class='card' onclick='searchEmployeesFunction()'>
         <img src='.//images/Search_Employees.png' alt='Search Employees'>
         <div class='container'>
             <h3>Search Employees</h3>

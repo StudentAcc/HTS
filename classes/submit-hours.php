@@ -205,8 +205,27 @@ class SubmitHours extends Connect {
     }
 
     /* ----------------------------------------------------------------------------------------- */
+    /* ---------------------------------- EDIT HOURS FUNCTIONS --------------------------------- */
+    /* ----------------------------------------------------------------------------------------- */
+
+    public function editDayEntry($dayEntryId, $projectId, $taskTypeId, $taskName, $description, $hours, $expenseTypeId, $expenseAmount) {
+        // The task row and expense row that is specific to the day entry are updated.
+        $this->updateTask($dayEntryId, $projectId, $taskTypeId, $taskName, $description, $hours);
+        $this->updateExpense($dayEntryId, $expenseTypeId, $expenseAmount);
+    }
+
+    private function updateTask($dayEntryId, $projectId, $taskTypeId, $taskName, $description, $hours) {
+        $sql = "UPDATE Task SET projectId = '$projectId', taskTypeId = '$taskTypeId', taskName = '$taskName', taskDescription = '$description', hours = '$hours' WHERE dayEntryId = '$dayEntryId'";
+        $result = $this->connect()->query($sql);
+    }
+
+    private function updateExpense($dayEntryId, $expenseTypeId, $expenseAmount) {
+        $sql = "UPDATE Expense SET expenseType = '$expenseTypeId', expenseAmount = '$expenseAmount' WHERE dayEntryId = '$dayEntryId'";
+
+    }
+
+    /* ----------------------------------------------------------------------------------------- */
     /* ---------------- DATE FUNCTIONS FOR OBTAINING MONDAY'S AND SUNDAY'S DATE ---------------- */
-    /* ----------------- HAS TO BE IN THE SAME CLASS AS THE DAILY ENTRY CLASS ------------------ */
     /* ----------------------------------------------------------------------------------------- */
     private function getMondayDate($date) {
         $monday = date("d", strtotime($date));
@@ -235,7 +254,7 @@ class SubmitHours extends Connect {
                     $year--;
                     $month = 12;
                 }
-                $monday = $this->compensateNegativeDay($monday, $month);
+                $monday = compensateNegativeDay($monday, $month);
             }
         }
         elseif ($month == 4 || $month == 6 || $month == 9 || $month == 11) {
@@ -245,7 +264,7 @@ class SubmitHours extends Connect {
                     $year--;
                     $month = 12;
                 }
-                $monday = $this->compensateNegativeDay($monday, $month);
+                $monday = compensateNegativeDay($monday, $month);
             }
         }
         elseif ($month == 2) {
@@ -257,7 +276,7 @@ class SubmitHours extends Connect {
                         $year--;
                         $month = 12;
                     }
-                    $monday = $this->compensateNegativeDay($monday, $month);
+                    $monday = compensateNegativeDay($monday, $month);
                 }
             }
             else {
@@ -267,7 +286,7 @@ class SubmitHours extends Connect {
                         $year--;
                         $month = 12;
                     }
-                    $monday = $this->compensateNegativeDay($monday, $month);
+                    $monday = compensateNegativeDay($monday, $month);
                 }
             }
         }
