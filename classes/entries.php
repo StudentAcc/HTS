@@ -1,5 +1,32 @@
 <?php
 class Entries extends Connect { 
+    // Returns the entries from the timesheet table.
+    protected function getAllTimesheets() {
+        $sql = "SELECT * FROM WeeklyTimesheets";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                if ($_SESSION["id"] == $row["consultantId"]) {
+                    $entries[] = $row;
+                }
+            }
+            return $entries;
+        }
+    }
+    
+    protected function getAccountDetails() {
+        $sql = "SELECT * FROM Account";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                if ($_SESSION["id"] == $row["empId"]) {
+                    $entries[] = $row;
+                }
+            }
+            return $entries;
+        }
+    }
+    
     // Returns the entries from the projectList (contains a list of projects) table.
     protected function getProjects() {
         $sql = "SELECT * FROM ProjectList";
