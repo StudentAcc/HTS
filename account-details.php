@@ -16,7 +16,7 @@
         <title>Hourglass Timesheet System</title>
         <link rel="stylesheet" href="./css/reset.css">
         <link rel="stylesheet" href="./css/navbar.css">
-        <link rel="stylesheet" href="./css/view-timesheets.css">
+        <link rel="stylesheet" href="./css/account.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
     </head>
     <body>
@@ -29,6 +29,7 @@
                     $timesheets = new View();
                     $timesheets->printAccountDetails();
                 ?>
+                <p1><a href='./change-password.php'>Change Password</a></p1>
             </div>
         </section>
     </body>
