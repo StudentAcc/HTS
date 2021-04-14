@@ -10,7 +10,7 @@ echo "<div class='row'>
     </div>
 </div>
 <div class='column'>
-    <div class='card'>
+    <div class='card' onclick='searchAccountsFunction()'>
         <img src='.//images/Search_Accounts.png' alt='Search Accounts'>
         <div class='container'>
             <h3>Search Accounts/Employees</h3>

@@ -9,6 +9,8 @@
     }
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $filters = [
+            "Firstname" => emptyCheck($_POST["Firstname"],"%"),
+            "Lastname" => emptyCheck($_POST["Lastname"],"%"),
             "Start"   => emptyCheck($_POST["Start"],"%"),
             "End"  => emptyCheck($_POST["End"],"%"),
             "Status"  => emptyCheck($_POST["Status"],"%"),
@@ -17,6 +19,8 @@
         ];
     } else {
         $filters = [
+            "Firstname"  => "%",
+            "Lastname"  => "%",
             "Start"   => "%",
             "End"  => "%",
             "Status"  => "%",
@@ -57,16 +61,22 @@
                     echo('<aside class = "Filters">');
                     echo('<button id = "Reset Filters" onClick="viewTimesheetsFunction()">Reset Filters</button>');
                     echo('<form id = "ViewTimesheetFilter" method="post" action="./view-timesheets.php">');
+                    if ($_SESSION["type"] == "manager") {
+                        echo('<label for="Firstname"><b>First Name</b></label>');
+                        echo('<input name="Firstname" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Firstname"]:"").'">');
+                        echo('<label for="Lastname"><b>Last Name</b></label>');
+                        echo('<input name="Lastname" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Lastname"]:"").'">');
+                    }
                     echo('<label for="Start"><b>Start</b></label>');
-                    echo('<input name="Start" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Start"]:"").'">');
+                    echo('<input name="Start" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Start"]:"").'">');
                     echo('<label for="End"><b>End</b></label>');
-                    echo('<input name="End" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["End"]:"").'">');
+                    echo('<input name="End" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["End"]:"").'">');
                     echo('<label for="Status"><b>Status</b></label>');
                     echo('<input name="Status" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Status"]:"").'">');
                     echo('<label for="Submitted"><b>Submitted</b></label>');
-                    echo('<input name="Submitted" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Submitted"]:"").'">');
+                    echo('<input name="Submitted" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Submitted"]:"").'">');
                     echo('<label for="Resolved"><b>Resolved</b></label>');
-                    echo('<input name="Resolved" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Resolved"]:"").'">');
+                    echo('<input name="Resolved" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Resolved"]:"").'">');
                     echo('<button type="submit">Submit</button>');
                     echo('</form>');
                     echo('</aside>');

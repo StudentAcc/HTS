@@ -56,7 +56,7 @@ class Validation extends Connect {
         $sql = "SELECT * FROM Administrator a WHERE '$accountTableempId'= a.empId";
         $result = $this->connect()->query($sql);
         if ($result->num_rows == 1) { // Employee is an administrator.
-            $_SESSION["type"] = "admin";
+            $_SESSION["type"] = "administrator";
         }
     }
 
@@ -64,7 +64,7 @@ class Validation extends Connect {
         $sql = "SELECT * FROM FinanceMember f WHERE '$accountTableempId'= f.empId";
         $result = $this->connect()->query($sql);
         if ($result->num_rows == 1) { // Employee is a financial member.
-            $_SESSION["type"] == "finance";
+            $_SESSION["type"] = "finance";
         }
     }
 }

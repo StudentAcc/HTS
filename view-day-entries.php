@@ -65,6 +65,7 @@
                 <?php
                     // echo("<script>console.log('PHP: " . 3 . "');</script>");
                     // echo("<script>console.log('PHP: " . $timesheetID . "');</script>");
+                    $list = new View();
                     echo('<aside class = "Filters">');
                     echo('<button id = "Reset Filters" onClick="viewDayEntries('.$_SESSION["timesheetID"].')">Reset Filters</button>');
                     echo('<form id = "DayEntryFilter" method="post" action="./view-day-entries.php">');
@@ -73,15 +74,25 @@
                     echo('<label for="Hours"><b>Hours</b></label>');
                     echo('<input name="Hours" type="number" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Hours"]:"").'">');
                     echo('<label for="Task"><b>Task</b></label>');
-                    echo('<input name="Task" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Task"]:"").'">');
+                    echo('<input list="task-type" name="Task" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Task"]:"").'">');
+                    echo('<datalist id="task-type">');
+                    $list->printTaskTypes($_SESSION['Id']);
+                    echo('</datalist>');
                     echo('<label for="Project"><b>Project</b></label>');
-                    echo('<input name="Project" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Project"]:"").'">');
+                    echo('<input list="projects" name="Project" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Project"]:"").'">');
+                    echo('<datalist id="projects">');
+                    $list->printProjects($_SESSION['Id']);
+                    echo('</datalist>');
                     echo('<label for="ExpenseType"><b>Expense Type</b></label>');
-                    echo('<input name="ExpenseType" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["ExpenseType"]:"").'">');
+                    echo('<input name="ExpenseType" list="expense-type" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["ExpenseType"]:"").'">');
+                    echo('<datalist id="expense-type">');
+                    $list->printExpenseTypes($_SESSION['Id']);
+                    echo('</datalist>');
                     echo('<label for="ExpenseAmount"><b>Expense Amount</b></label>');
                     echo('<input name="ExpenseAmount" type="number" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["ExpenseAmount"]:"").'">');
                     echo('<button type="submit">Submit</button>');
                     echo('</form>');
+
 
                     // echo("<script>console.log('PHP: " . $filters['Date'] . "');</script>");
                     // echo("<script>console.log('PHP: " . $filters['Hours'] . "');</script>");
