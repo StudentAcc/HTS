@@ -7,6 +7,43 @@
     if(!isset($_SESSION["type"])) { // Redirect the user to the login page, if the user hasn't logged in yet.
         header("Location: ./login.php");
     }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $filters = [
+            "Week" => emptyCheck($_POST["Week"],"%"),
+            // "End" => emptyCheck($_POST["End"],"%"),
+            "Status"  => emptyCheck($_POST["Status"],"%"),
+            "Submitted"  => emptyCheck($_POST["Submitted"],"%"),
+            "Resolved"  => emptyCheck($_POST["Resolved"],"%")
+        ];
+        if ($_SESSION['type'] == "manager") {
+            $filters["Firstname"] = emptyCheck($_POST["Firstname"],"%");
+            $filters["Lastname"] = emptyCheck($_POST["Lastname"],"%");
+        } else {
+            $filters["Firstname"]  = "%";
+            $filters["Lastname"]  = "%";
+        }
+    } else {
+        $filters = [
+            "Firstname"  => "%",
+            "Lastname"  => "%",
+            "Week" => "%",
+            // "End"  => "%",
+            "Status"  => "%",
+            "Submitted"  => "%",
+            "Resolved"  => "%"
+        ];
+    }
+
+    function emptyCheck($stringToCheck, $stringToConvertTo) {
+        echo("<script>console.log('PHP: " . $stringToCheck . "');</script>");
+        if($stringToCheck == "") {
+            echo("<script>console.log('PHP: 1');</script>");
+            return $stringToConvertTo;
+        } else {
+            echo("<script>console.log('PHP: 2');</script>");
+            return $stringToCheck;
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +63,30 @@
                 <a href="./index.php"><i class="fas fa-arrow-left"></i></a>
                 <h1>View Timesheets</h1>
                 <?php
+                    echo('<aside class = "Filters">');
+                    echo('<button id = "Reset Filters" onClick="viewTimesheetsFunction()">Reset Filters</button>');
+                    echo('<form id = "ViewTimesheetFilter" method="post" action="./view-timesheets.php">');
+                    if ($_SESSION["type"] == "manager") {
+                        echo('<label for="Firstname"><b>First Name</b></label>');
+                        echo('<input name="Firstname" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Firstname"]:"").'">');
+                        echo('<label for="Lastname"><b>Last Name</b></label>');
+                        echo('<input name="Lastname" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Lastname"]:"").'">');
+                    }
+                    echo('<label for="Week"><b>Week</b></label>');
+                    echo('<input name="Week" type="week" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Week"]:"").'">');
+                    // echo('<label for="End"><b>End</b></label>');
+                    // echo('<input name="End" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["End"]:"").'">');
+                    echo('<label for="Status"><b>Status</b></label>');
+                    echo('<input name="Status" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Status"]:"").'">');
+                    echo('<label for="Submitted"><b>Submitted</b></label>');
+                    echo('<input name="Submitted" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Submitted"]:"").'">');
+                    echo('<label for="Resolved"><b>Resolved</b></label>');
+                    echo('<input name="Resolved" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Resolved"]:"").'">');
+                    echo('<button type="submit">Submit</button>');
+                    echo('</form>');
+                    echo('</aside>');
                     $timesheets = new View();
-                    $timesheets->printTimesheetEntries();
+                    $timesheets->printTimesheetEntries($filters);
                 ?>
             </div>
         </section>

@@ -9,6 +9,8 @@ echo "<div class='row'>
         </div>
     </div>
 </div>
+//Durra- ADD NEW ICON SAYING Search Day Entries !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Durra- Change view timesheet h3 headings on all files to View Weekly Timesheets
 <div class='column'>
     <div class='card' onClick='viewTimesheetsFunction()'>
         <img src='.//images/View_Timesheets.png' alt='View Timesheets'>
@@ -19,7 +21,7 @@ echo "<div class='row'>
     </div>
 </div>
 <div class='column'>
-    <div class='card'>
+    <div class='card' onclick='searchEmployeesFunction()'>
         <img src='.//images/Search_Employees.png' alt='Search Employees'>
         <div class='container'>
             <h3>Search Employees</h3>
