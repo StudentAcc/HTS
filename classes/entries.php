@@ -1,5 +1,32 @@
 <?php
 class Entries extends Connect { 
+    // Returns the entries from the timesheet table.
+    protected function getAllTimesheets() {
+        $sql = "SELECT * FROM WeeklyTimesheets";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                if ($_SESSION["id"] == $row["consultantId"]) {
+                    $entries[] = $row;
+                }
+            }
+            return $entries;
+        }
+    }
+    
+    protected function getAccountDetails() {
+        $sql = "SELECT * FROM Account";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                if ($_SESSION["id"] == $row["empId"]) {
+                    $entries[] = $row;
+                }
+            }
+            return $entries;
+        }
+    }
+    
     // Returns the entries from the projectList (contains a list of projects) table.
     protected function getProjects() {
         $sql = "SELECT * FROM ProjectList";
@@ -14,6 +41,7 @@ class Entries extends Connect {
 
     // Returns the entries that are specific to a user from the tasks (contains a list of tasks) table.
     protected function getTaskTypes($sessionEmpId) {
+        echo("<script>console.log('PHP  : " . $sessionEmpId . "');</script>");
         $sessionEmpId = ($_SESSION['type'] == "manager" ? "%" : $sessionEmpId);
         $sql = "SELECT t.Id, t.taskType FROM ConsultantsTaskTypes c INNER JOIN TaskTypeList t
         ON c.taskTypeId = t.id AND c.empId LIKE '$sessionEmpId'";
@@ -49,13 +77,17 @@ class Entries extends Connect {
         $lastName = $filters['Lastname'];
         echo("<script>console.log('PHP: " . $firstName . "');</script>");
         echo("<script>console.log('PHP: " . $lastName . "');</script>");
-        $start = $filters['Start'];
-        $end = $filters['End'];
+        $week = $filters['Week'];
+        if ($week != "%") {
+            $week = date( "Y-m-d", strtotime(substr($week,0,4)."W".substr($week,6)."1") );
+        }
+        echo("<script>console.log('PHP: " . $week . "');</script>");
+        // $end = $filters['End'];
         $status = $filters['Status'];
         $resolved = $filters['Resolved'];
         $submitted = $filters['Submitted'];
-        $sql = "SELECT * FROM weeklytimesheets w INNER JOIN employee em ON w.consultantId = em.empId WHERE w.consultantId LIKE '$temp' AND w.start LIKE '$start' AND w.end LIKE '$end'
-        AND w.status LIKE '$status' AND ( (w.submitted LIKE '$submitted') ".( $submitted == "%" ?'OR w.submitted IS NULL)':")")."AND em.firstName LIKE '$firstName' AND em.lastName LIKE '$lastName' AND 
+        $sql = "SELECT * FROM weeklytimesheets w INNER JOIN employee em ON w.consultantId = em.empId WHERE w.consultantId LIKE '$temp' AND  w.start LIKE '$week' 
+        AND w.status LIKE '$status' AND ( (w.submitted LIKE '$submitted') ".( $submitted == "%" ?'OR w.submitted IS NULL)':")")."AND em.firstName LIKE '$firstName' AND em.lastName LIKE '$lastName' AND  
         ( ( w.resolved LIKE '$resolved') ".( $resolved == "%" ?"OR w.resolved IS NULL)":")")."";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {

@@ -91,6 +91,21 @@ class View extends Entries {
         }
     }
 
+    public function printAccountDetails() {
+        $data = $this->getAccountDetails();
+        foreach ($data as $entries) {
+            echo "<div class='timesheet-container'>";
+            echo "<h2>Account Number: ".$entries['accNumber']."</h2>";
+            echo "<p>Username: ".$entries['username']."</p>";
+            echo "<p>First Name: ".$entries['firstname']."</p>";
+            echo "<p>Surname: ".$entries['surname']."</p>";
+            echo "<p>Date of Birth: ".$entries['dateofbirth']."</p>";
+            echo "<p>Status: ".$entries['status']."</p>";
+            echo "<p>Employee ID: ".$entries['empId']."</p>";
+            echo "</div>";
+        }
+    }
+
     public function printProjects() {
         $data = $this->getProjects();
         if ($data != NULL) {
