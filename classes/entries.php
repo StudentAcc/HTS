@@ -38,13 +38,17 @@ class Entries extends Connect {
     }
 
     protected function getAllTimesheets($filters) {
-        $temp = $_SESSION['id'];
+        if ($_SESSION['type'] == "manager") {
+            $temp = "%";
+        } else {
+            $temp = $_SESSION['id'];
+        }
         $start = $filters['Start'];
         $end = $filters['End'];
         $status = $filters['Status'];
         $resolved = $filters['Resolved'];
         $submitted = $filters['Submitted'];
-        $sql = "SELECT * FROM weeklytimesheets w WHERE w.consultantId = '$temp' AND w.start LIKE '$start' AND w.end LIKE '$end'
+        $sql = "SELECT * FROM weeklytimesheets w INNER JOIN employee e ON w.consultantId = e.empId WHERE w.consultantId = '$temp' AND w.start LIKE '$start' AND w.end LIKE '$end'
         AND w.status LIKE '$status' AND ( (w.submitted LIKE '$submitted') ".( $submitted == "%" ?'OR w.submitted IS NULL)':")")."AND
         ( ( w.resolved LIKE '$resolved') ".( $resolved == "%" ?"OR w.resolved IS NULL)":")")."";
         $result = $this->connect()->query($sql);

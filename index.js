@@ -36,3 +36,15 @@ function viewTimesheetsFunction() {
 function viewDayEntries(timesheetID) {
     window.location.href = "view-day-entries.php?id=" + timesheetID; 
 }
+
+function searchDayEntriesFunction(){
+    window.location.replace("search-day-entries.php");
+}
+
+function searchEmployeesFunction() {
+    window.location.href = "searchEmployees.php";
+}
+
+function searchAccountsFunction() {
+    window.location.href = "searchAccounts.php";
+}
