@@ -10,7 +10,7 @@ echo "<div class='row'>
         </div>
     </div>
     <div class='column'>
-        <div class='card'>
+        <div class='card' onClick='viewTimesheetsFunction()'>
             <img src='.//images/View_Timesheets.png' alt='View Timesheets'>
             <div class='container'>
                 <h3>View Timesheets</h3>

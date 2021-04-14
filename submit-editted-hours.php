@@ -10,6 +10,7 @@ if(!isset($_SESSION["type"])) { // Redirect the user to the login page, if the u
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Date is not required
+    $sessionEmpId = $_SESSION["id"];
     $dayEntryId = $_POST["day-entry-id"];
     $project = $_POST["project"]; /* Mandatory field */
     $taskType = $_POST["task-type"]; /* Mandatory field */
@@ -35,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $expenseType = $_POST["expense-type"];
         $expenseAmount = $_POST["expense-amount"];
     }
+    echo("<script>alert('PHP S : " . $expenseType . "');</script>");
     $entries = new SubmitHours();
     // Check to see if a valid project name was given.
     $projectId = $entries->checkProjectList($project);

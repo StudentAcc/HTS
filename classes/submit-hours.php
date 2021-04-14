@@ -138,9 +138,11 @@ class SubmitHours extends Connect {
 
     public function checkExpenseList($expenseType, $sessionEmpId) {
         // Check if the personalised expense type exists.
+        echo("<script>console.log('PHP S : DAS');</script>");
         $sql = "SELECT e.Id, e.expenseType, c.empId FROM ExpenseTypeList e INNER JOIN ConsultantsExpenseTypes c
         ON e.Id = c.expenseTypeId AND c.empId = '$sessionEmpId'";
         $result = $this->connect()->query($sql);
+        echo("<script>console.log('PHP S : " . $sessionEmpId . "');</script>");
         if ($result->num_rows > 0) { // There exists personalised expense types. 
             while ($row = $result->fetch_assoc()) {
                 if ($expenseType == $row["expenseType"]) {
