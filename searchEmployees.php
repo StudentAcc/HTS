@@ -34,7 +34,7 @@
               <a href="./index.php"><i class="fas fa-arrow-left"></i></a>
               <h1>Search Employees</h1>
               <p>Search for employees here.</p>
-              <form action="./viewEmployees.php" method="post">
+              <form action="./view-employees.php" method="post">
                   <label for="firstName"><b>First Name</b></label>
                   <input type="text" name="firstName" required>
                   <label for="lastName"><b>Last Name</b></label>
