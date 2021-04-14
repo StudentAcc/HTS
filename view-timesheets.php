@@ -9,20 +9,25 @@
     }
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $filters = [
-            "Firstname" => emptyCheck($_POST["Firstname"],"%"),
-            "Lastname" => emptyCheck($_POST["Lastname"],"%"),
-            "Start"   => emptyCheck($_POST["Start"],"%"),
-            "End"  => emptyCheck($_POST["End"],"%"),
+            "Week" => emptyCheck($_POST["Week"],"%"),
+            // "End" => emptyCheck($_POST["End"],"%"),
             "Status"  => emptyCheck($_POST["Status"],"%"),
             "Submitted"  => emptyCheck($_POST["Submitted"],"%"),
             "Resolved"  => emptyCheck($_POST["Resolved"],"%")
         ];
+        if ($_SESSION['type'] == "manager") {
+            $filters["Firstname"] = emptyCheck($_POST["Firstname"],"%");
+            $filters["Lastname"] = emptyCheck($_POST["Lastname"],"%");
+        } else {
+            $filters["Firstname"]  = "%";
+            $filters["Lastname"]  = "%";
+        }
     } else {
         $filters = [
             "Firstname"  => "%",
             "Lastname"  => "%",
-            "Start"   => "%",
-            "End"  => "%",
+            "Week" => "%",
+            // "End"  => "%",
             "Status"  => "%",
             "Submitted"  => "%",
             "Resolved"  => "%"
@@ -67,10 +72,10 @@
                         echo('<label for="Lastname"><b>Last Name</b></label>');
                         echo('<input name="Lastname" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Lastname"]:"").'">');
                     }
-                    echo('<label for="Start"><b>Start</b></label>');
-                    echo('<input name="Start" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Start"]:"").'">');
-                    echo('<label for="End"><b>End</b></label>');
-                    echo('<input name="End" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["End"]:"").'">');
+                    echo('<label for="Week"><b>Week</b></label>');
+                    echo('<input name="Week" type="week" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Week"]:"").'">');
+                    // echo('<label for="End"><b>End</b></label>');
+                    // echo('<input name="End" type="month" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["End"]:"").'">');
                     echo('<label for="Status"><b>Status</b></label>');
                     echo('<input name="Status" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Status"]:"").'">');
                     echo('<label for="Submitted"><b>Submitted</b></label>');
