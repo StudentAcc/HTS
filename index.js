@@ -42,9 +42,9 @@ function searchDayEntriesFunction(){
 }
 
 function searchEmployeesFunction() {
-    window.location.href = "searchEmployees.php";
+    window.location.href = "search-employees.php";
 }
 
 function searchAccountsFunction() {
-    window.location.href = "searchAccounts.php";
+    window.location.href = "search-accounts.php";
 }

@@ -10,10 +10,9 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $firstName = $_POST["firstName"];
         $lastName = $_POST["lastName"];
-        }
-        else {
-            $error = "Name does not exist.";
-          }
+    } else {
+        $error = "Name does not exist.";
+    }
 ?>
 
 <DOCTYPE html>
@@ -42,9 +41,9 @@
                   <button type="submit">Submit</button>
               </form>
               <?php
-                if ($_SESSION["type"] == "administrator") {
-                    echo "<a class='search-employees' href='./searchAccounts.php'>Search by account</a>";
-                }
+                // if ($_SESSION["type"] == "administrator") {
+                //     echo "<a class='search-employees' href='./searchAccounts.php'>Search by account</a>";
+                // }
               ?>
           </div>
       </section>

@@ -112,6 +112,19 @@ class Entries extends Connect {
         }
     }
 
+    protected function getAllEmployees($name) {
+        $firstName = $name['firstName'];
+        $lastName = $name['lastName'];
+        $sql = "SELECT * FROM employee e WHERE e.firstName = '$firstName' AND e.lastName = '$lastName' ";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                 $entries[] = $row;
+            }
+            return $entries;
+        }
+    }
+
     protected function getProjectName($dayEntryId) {
         $sql = "SELECT p.projectName FROM ProjectList p, Task t WHERE t.dayEntryId = '$dayEntryId' AND t.projectId = p.Id";
         $result = $this->connect()->query($sql);

@@ -94,6 +94,23 @@ class View extends Entries {
         }
     }
 
+    public function printViewEmployees($name) {
+        $data = $this->getAllEmployees($name);
+        if (is_null($data)) {
+            echo("<div class = 'employee-no-results'>");
+            echo "<h0>No Employees Found</h0>";
+            echo "</div>";
+        } else {
+            foreach ($data as $entries) {
+                echo "<div class='employee-container'>";
+                echo "<h2>First Name: ".$entries['firstName']."</h2>";
+                echo "<h2>Last Name: ".$entries['lastName']."</h2>";
+                echo "<p>Email: ".$entries['email']."</p>";
+                echo "</div>";
+            }
+        }
+    }
+
     public function printAccountDetails() {
         $data = $this->getAccountDetails();
         foreach ($data as $entries) {

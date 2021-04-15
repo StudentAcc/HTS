@@ -115,6 +115,38 @@ form button:hover {
     cursor: pointer;
 }
 
+.employee-container {
+    padding: 0.5em;
+    margin-bottom: 0.125em;
+    background-color: #50ABFF;
+    border: 0.05em solid black;
+    border-radius: 0.75em;
+}
+
+.employee-container:hover {
+    background-color: #188FFF;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.employee-container h2 {
+    display: inline-block;
+    margin-right: 2em;
+}
+
+.employee-no-results {
+    padding: 0.5em;
+    margin-bottom: 0.125em;
+    background-color: #50ABFF;
+    border: 0.05em solid black;
+    border-radius: 0.75em;
+    text-align: center;
+}
+
+.employee-container p {
+    text-align: left;
+}
+
 @media screen and (max-width: 520px) {
     .container {
         min-width: 90%;
