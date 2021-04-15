@@ -29,7 +29,7 @@
                     <h1>Search Employees</h1>
                     <?php
                     $timesheets = new View();
-                    // $timesheets->printViewEmployees($_POST);
+                    $timesheets->printViewEmployees($_POST);
                     // if ($_SESSION["type"] == "administrator") {
                     //     echo "<a class='search-employees' href='./searchAccounts.php'>Search by account</a>";
                     // }
