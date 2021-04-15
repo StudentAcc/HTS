@@ -4,7 +4,7 @@ body {
 
 .container {
     position: relative;
-    top: 15em;
+    top: 10em;
     margin-left: auto;
     margin-right: auto;
     width: 60%;
@@ -54,7 +54,7 @@ body {
 }
 
 .timesheet-container h2 {
-    display: inline;
+    display: inline-block;
     margin-right: 2em;
 }
 
@@ -69,6 +69,15 @@ body {
     border: 0.05em solid black;
     border-radius: 0.75em;
     text-align: center;
+}
+
+.filter-field-and-label {
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.filter-form {
+    margin-bottom: 1em;
 }
 
 /*
@@ -96,4 +105,9 @@ body {
     .container {
         min-width: 90%;
     }
+
+    .timesheet-container h2 {
+        display: inline-block;
+    }
+
 }

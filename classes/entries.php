@@ -1,21 +1,7 @@
 <?php
 class Entries extends Connect { 
-    // Returns the entries from the timesheet table.
-    protected function getAllTimesheets() {
-        $sql = "SELECT * FROM WeeklyTimesheets";
-        $result = $this->connect()->query($sql);
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                if ($_SESSION["id"] == $row["consultantId"]) {
-                    $entries[] = $row;
-                }
-            }
-            return $entries;
-        }
-    }
-    
     protected function getAccountDetails() {
-        $sql = "SELECT * FROM Account";
+        $sql = "SELECT * FROM account a INNER JOIN employee e ON e.empId = a.empId";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -43,8 +29,7 @@ class Entries extends Connect {
     protected function getTaskTypes($sessionEmpId) {
         echo("<script>console.log('PHP  : " . $sessionEmpId . "');</script>");
         $sessionEmpId = ($_SESSION['type'] == "manager" ? "%" : $sessionEmpId);
-        $sql = "SELECT t.Id, t.taskType FROM ConsultantsTaskTypes c INNER JOIN TaskTypeList t
-        ON c.taskTypeId = t.id AND c.empId LIKE '$sessionEmpId'";
+        $sql = "SELECT t.Id, t.taskType FROM ConsultantsTaskTypes c INNER JOIN TaskTypeList t ON c.tasktypeId = t.Id AND c.empId LIKE '$sessionEmpId'";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -84,11 +69,11 @@ class Entries extends Connect {
         echo("<script>console.log('PHP: " . $week . "');</script>");
         // $end = $filters['End'];
         $status = $filters['Status'];
-        $resolved = $filters['Resolved'];
-        $submitted = $filters['Submitted'];
+        $resolved = $filters['Resolved']."%";
+        $submitted = $filters['Submitted']."%";
         $sql = "SELECT * FROM weeklytimesheets w INNER JOIN employee em ON w.consultantId = em.empId WHERE w.consultantId LIKE '$temp' AND  w.start LIKE '$week' 
-        AND w.status LIKE '$status' AND ( (w.submitted LIKE '$submitted') ".( $submitted == "%" ?'OR w.submitted IS NULL)':")")."AND em.firstName LIKE '$firstName' AND em.lastName LIKE '$lastName' AND  
-        ( ( w.resolved LIKE '$resolved') ".( $resolved == "%" ?"OR w.resolved IS NULL)":")")."";
+        AND w.status LIKE '$status' AND ( (w.submitted LIKE '$submitted') ".( $submitted == "%%" ?'OR w.submitted IS NULL)':")")."AND em.firstName LIKE '$firstName' AND em.lastName LIKE '$lastName' AND  
+        ( ( w.resolved LIKE '$resolved') ".( $resolved == "%%" ?"OR w.resolved IS NULL)":")")."";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {

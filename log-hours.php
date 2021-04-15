@@ -56,7 +56,7 @@
             }
             else {
                 $error_date = date("jS \of F Y", strtotime($date));
-                $error = "You have already created an entry for ".$error_date.". You can edit it in the view timesheet section.";
+                $error = "You have already created an entry for ".$error_date.". You can edit it in the view timesheet section if it has not been submitted yet.";
             }
         }
         else {

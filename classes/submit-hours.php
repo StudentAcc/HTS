@@ -5,9 +5,9 @@ class SubmitHours extends Connect {
         $timesheetId = $this->checkTimesheet($date, $sessionEmpId);
         // Check if the given date already matches the date of another day entry.
         $sql = "SELECT d.date, w.consultantId FROM DayEntries d INNER JOIN WeeklyTimesheets w
-        ON d.date = '$date' AND w.consultantId = '$sessionEmpId'";
+        ON w.Id = d.weeklyTimesheetId AND d.date = '$date' AND w.consultantId = '$sessionEmpId'";
         $result = $this->connect()->query($sql);
-        if ($result->num_rows == 1) { // There is an existing day entry with the same date.
+        if ($result->num_rows >= 1) { // There is an existing day entry with the same date.
             // THERE ALREADY EXISTS A DAILY ENTRY OF USING THE INPUTTED DATE!
             return false;
         }
@@ -63,6 +63,8 @@ class SubmitHours extends Connect {
             $check_dayEntry = $this->connect()->query($check_query);
             if ($check_dayEntry->num_rows > 0) { // Should only return 1 row.
                 while ($row = $check_dayEntry->fetch_assoc()) {
+                    $sql = "UPDATE WeeklyTimesheets w SET w.status = 'In-review', w.resolved = NULL WHERE w.Id = '$timesheetId'";
+                    $result = $this->connect()->query($sql);
                     return $row["Id"];
                 }
             }
@@ -256,7 +258,7 @@ class SubmitHours extends Connect {
                     $year--;
                     $month = 12;
                 }
-                $monday = compensateNegativeDay($monday, $month);
+                $monday = $this->compensateNegativeDay($monday, $month);
             }
         }
         elseif ($month == 4 || $month == 6 || $month == 9 || $month == 11) {
@@ -266,7 +268,7 @@ class SubmitHours extends Connect {
                     $year--;
                     $month = 12;
                 }
-                $monday = compensateNegativeDay($monday, $month);
+                $monday = $this->compensateNegativeDay($monday, $month);
             }
         }
         elseif ($month == 2) {
@@ -278,7 +280,7 @@ class SubmitHours extends Connect {
                         $year--;
                         $month = 12;
                     }
-                    $monday = compensateNegativeDay($monday, $month);
+                    $monday = $this->compensateNegativeDay($monday, $month);
                 }
             }
             else {
@@ -288,7 +290,7 @@ class SubmitHours extends Connect {
                         $year--;
                         $month = 12;
                     }
-                    $monday = compensateNegativeDay($monday, $month);
+                    $monday = $this->compensateNegativeDay($monday, $month);
                 }
             }
         }

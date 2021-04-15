@@ -10,6 +10,7 @@
     if(!isset($_SESSION["type"])) { // Redirect the user to the login page, if the user hasn't logged in yet.
         header("Location: ./login.php");
     }
+    $error = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST["username"];
 	    $password = $_POST["password"];
@@ -19,7 +20,8 @@
         if ($checkValidity->login($username, $password)) {
             if ($new_password1 == $new_password2){
                 $test = new ChangeDetails();
-                $test->changePassword($username, $password, $new_password);
+                $test->changePassword($username, $password, $new_password1);
+                $error = "Password changed successfully!";
             }
             else {
                 $error = "Your new passwords don't match.";
@@ -62,8 +64,11 @@
                     <label for="password"><b>New Password</b></label>
                     <input type = "password" name = "new_password2" placeholder = "Minimum 7 characters"  minlength = "7" required>
                     <br>
+                    <br>
                     <button type="submit">Change Password</button>
                 </form>
+                <br>
+                <p><?php echo $error; ?></p>
             </div>
         </section>
     </body>

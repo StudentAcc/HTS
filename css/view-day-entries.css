@@ -4,7 +4,7 @@ body {
 
 .container {
     position: relative;
-    top: 15em;
+    top: 10em;
     margin-left: auto;
     margin-right: auto;
     width: 60%;
@@ -71,6 +71,15 @@ body {
     text-align: center;
 }
 
+.filter-field-and-label {
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.filter-form {
+    margin-bottom: 1em;
+}
+
 /*
 .container div a {
     min-width: 7.5em;
@@ -96,4 +105,9 @@ body {
     .container {
         min-width: 90%;
     }
+
+    .timesheet-container h2 {
+        display: inline-block;
+    }
+
 }
