@@ -63,7 +63,7 @@ class SubmitHours extends Connect {
             $check_dayEntry = $this->connect()->query($check_query);
             if ($check_dayEntry->num_rows > 0) { // Should only return 1 row.
                 while ($row = $check_dayEntry->fetch_assoc()) {
-                    $sql = "UPDATE WeeklyTimesheets w SET w.status = 'In-review', w.resolved = NULL WHERE w.Id = '$timesheetId'";
+                    $sql = "UPDATE WeeklyTimesheets w SET w.status = 'In-review', w.resolved = NULL WHERE w.Id = '$timesheetId' AND w.status = 'Approved'";
                     $result = $this->connect()->query($sql);
                     return $row["Id"];
                 }
