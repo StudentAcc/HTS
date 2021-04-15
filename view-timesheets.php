@@ -16,14 +16,17 @@
             "Resolved"  => emptyCheck($_POST["Resolved"],"%")
         ];
         if ($_SESSION['type'] == "manager") {
+            $filters["Id"] = emptyCheck($_POST["Id"],"%");
             $filters["Firstname"] = emptyCheck($_POST["Firstname"],"%");
             $filters["Lastname"] = emptyCheck($_POST["Lastname"],"%");
         } else {
+            $filters["Id"]  = "%";
             $filters["Firstname"]  = "%";
             $filters["Lastname"]  = "%";
         }
     } else {
         $filters = [
+            "Id"  => "%",
             "Firstname"  => "%",
             "Lastname"  => "%",
             "Week" => "%",
@@ -67,6 +70,10 @@
                     echo('<button id = "Reset Filters" onClick="viewTimesheetsFunction()">Reset Filters</button>');
                     echo('<form id = "ViewTimesheetFilter" class="filter-form" method="post" action="./view-timesheets.php">');
                     if ($_SESSION["type"] == "manager") {
+                        echo('<div class="filter-field-and-label">');
+                        echo('<label for="Id"><b>ID: </b></label>');
+                        echo('<input name="Id" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Id"]:"").'">');
+                        echo('</div>');
                         echo('<div class="filter-field-and-label">');
                         echo('<label for="Firstname"><b>First Name: </b></label>');
                         echo('<input name="Firstname" type="text" value="'.($_SERVER["REQUEST_METHOD"] == "POST"? $_POST["Firstname"]:"").'">');

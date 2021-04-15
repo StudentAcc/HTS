@@ -60,6 +60,7 @@ class Entries extends Connect {
         }
         $firstName = $filters['Firstname'];
         $lastName = $filters['Lastname'];
+        $id = $filters['Id'];
         echo("<script>console.log('PHP: " . $firstName . "');</script>");
         echo("<script>console.log('PHP: " . $lastName . "');</script>");
         $week = $filters['Week'];
@@ -71,7 +72,7 @@ class Entries extends Connect {
         $status = $filters['Status'];
         $resolved = $filters['Resolved']."%";
         $submitted = $filters['Submitted']."%";
-        $sql = "SELECT * FROM weeklytimesheets w INNER JOIN employee em ON w.consultantId = em.empId WHERE w.consultantId LIKE '$temp' AND  w.start LIKE '$week' 
+        $sql = "SELECT * FROM weeklytimesheets w INNER JOIN employee em ON w.consultantId = em.empId WHERE w.consultantId LIKE '$temp' AND  w.start LIKE '$week' AND em.empId LIKE '$id' 
         AND w.status LIKE '$status' AND ( (w.submitted LIKE '$submitted') ".( $submitted == "%%" ?'OR w.submitted IS NULL)':")")."AND em.firstName LIKE '$firstName' AND em.lastName LIKE '$lastName' AND  
         ( ( w.resolved LIKE '$resolved') ".( $resolved == "%%" ?"OR w.resolved IS NULL)":")")."";
         $result = $this->connect()->query($sql);

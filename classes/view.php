@@ -12,6 +12,7 @@ class View extends Entries {
             foreach ($data as $entries) {
                 echo "<div class='timesheet-container' onclick='viewDayEntries(".$entries['Id'].")'>";
                 if ($_SESSION['type'] == "manager") {
+                    echo "<h2>Employee ID: ".$entries['empId']."</h1>";
                     echo "<h2>First Name: ".$entries['firstName']."</h1>";
                     echo "<h2>Last Name: ".$entries['lastName']."</h1>";
                     echo('<br>');
